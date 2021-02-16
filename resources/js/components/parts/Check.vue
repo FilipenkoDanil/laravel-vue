@@ -135,9 +135,11 @@ export default {
             }
         },
         send() {
-            axios.post('/api/orders', {
+            axios.post(`${this.$baseURL}/api/orders`, {
                 cart: this.cart,
                 form: this.form,
+                total: this.totalprice,
+
             }).then(response => {
                 localStorage.clear()
                 this.form.name = ''

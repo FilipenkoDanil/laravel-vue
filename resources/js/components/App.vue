@@ -30,6 +30,7 @@ export default {
     },
     mounted() {
         this.loading()
+        console.log(this.baseURL)
     }
 }
 </script>

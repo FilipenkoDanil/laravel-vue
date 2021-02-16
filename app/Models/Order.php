@@ -13,6 +13,12 @@ class Order extends Model
         'name',
         'fio',
         'phone',
-        'address'
+        'address',
+        'sum',
+        'new',
     ];
+
+    public function products() {
+        return $this->belongsToMany(Product::class)->withPivot('count', 'price');
+    }
 }

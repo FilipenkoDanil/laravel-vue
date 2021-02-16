@@ -14,6 +14,8 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(Vuelidate)
 
+Vue.prototype.$baseURL = location.protocol + '//' + location.host
+
 export const eventEmitter = new Vue()
 
 const app = new Vue({

@@ -14,10 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::middleware('auth:sanctum')->get('/authenticated', function () {
+    return true;
 });
 
 Route::apiResource('products', \App\Http\Controllers\API\ProductController::class);
 Route::apiResource('categories', \App\Http\Controllers\API\CategoryController::class);
 Route::apiResource('orders', \App\Http\Controllers\API\OrderController::class);
+
+Route::post('login', [\App\Http\Controllers\API\LoginController::class, 'login']);
+Route::post('logout', [\App\Http\Controllers\API\LoginController::class, 'logout']);
+
+Route::get('/new-orders', [\App\Http\Controllers\API\AdminController::class, 'index']);
+Route::post('/show', [\App\Http\Controllers\API\AdminController::class, 'show']);
+Route::post('/change', [\App\Http\Controllers\API\AdminController::class, 'changeStatus']);

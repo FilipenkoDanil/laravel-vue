@@ -27,24 +27,21 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            $order = Order::create([
-                'name' => $request->form['name'],
-                'fio' => $request->form['fio'],
-                'phone' => $request->form['phone'],
-                'address' => $request->form['address']
-            ]);
+        $order = Order::create([
+            'name' => $request->form['name'],
+            'fio' => $request->form['fio'],
+            'phone' => $request->form['phone'],
+            'address' => $request->form['address'],
+            'sum' => $request->total,
+        ]);
 
-            foreach ($request->cart as $orderProduct) {
-                OrderProducts::create([
-                    'order_id' => $order->id,
-                    'product_id' => $orderProduct['id'],
-                    'count' => $orderProduct['amount'],
-                    'price' => $orderProduct['price']
-                ]);
-            }
-        } catch (\Exception $exception){
-            return $exception;
+        foreach ($request->cart as $orderProduct) {
+            OrderProducts::create([
+                'order_id' => $order->id,
+                'product_id' => $orderProduct['id'],
+                'count' => $orderProduct['amount'],
+                'price' => $orderProduct['price']
+            ]);
         }
 
     }

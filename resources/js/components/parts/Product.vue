@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         loadProducts(alias) {
-            axios.get(`/api/products/${alias ? alias : ''}`).then(response => {
+            axios.get(`${this.$baseURL}/api/products/${alias ? alias : ''}`).then(response => {
                 this.products = response.data.products
 
                 let title = alias ? response.data.products[0].category.title : ''
@@ -52,7 +52,7 @@ export default {
         },
         cartAdd(pro) {
             eventEmitter.$emit('productAddToCart', pro)
-            this.$bvModal.msgBoxOk(`${pro.title} - добавлена в корзину.`, {
+            this.$bvModal.msgBoxOk(`${pro.title} - добавлено в корзину.`, {
                 size: 'sm',
                 buttonSize: 'sm',
                 okVariant: 'success',
