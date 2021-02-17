@@ -52,12 +52,11 @@ export default {
     data() {
         return {
             orders: [],
-            user: null
         }
     },
     methods: {
         getOrders() {
-            axios.get(`${this.$baseURL}api/new-orders`).then((response) => {
+            axios.get(`${this.$root.baseURL}/api/new-orders`).then((response) => {
                 this.orders = response.data.orders
             })
         },
@@ -68,9 +67,6 @@ export default {
         }
     },
     mounted() {
-        axios.get(`${this.$baseURL}/api/user`).then((response) => {
-            this.user = response.data
-        })
         this.getOrders()
     }
 }

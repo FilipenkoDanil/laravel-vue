@@ -1,13 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home'
-import Checkout from "../views/Checkout";
-import Login from "../views/Login";
-import AdminPanel from "../views/AdminPanel";
-import OrderInfo from "../views/OrderInfo";
-
 
 Vue.use(VueRouter)
+
+const baseURL = location.protocol + '//' + location.host
 
 const router = new VueRouter({
     mode: 'history',
@@ -15,30 +11,30 @@ const router = new VueRouter({
         {
             path: '/',
             name: 'home',
-            component: Home
+            component: () => import('../views/Home')
         },
         {
             path: '/product-category/:category',
             name: 'productsByCategory',
-            component: Home
+            component: () => import('../views/Home')
         },
         {
             path: '/checkout',
             name: 'checkout',
-            component: Checkout
+            component: () => import('../views/Checkout')
         },
         {
             path: '/login',
             name: 'login',
-            component: Login
+            component: () => import('../views/Login')
 
         },
         {
             path: '/admin',
             name: 'admin-index',
-            component: AdminPanel,
+            component: () => import('../views/AdminPanel'),
             beforeEnter: (to, from, next) => {
-                axios.get('http://localhost:8000/api/authenticated').then(() => {
+                axios.get(`${baseURL}/api/authenticated`).then(() => {
                     next()
                 }).catch(() => {
                     return next({name: 'login'})
@@ -48,9 +44,9 @@ const router = new VueRouter({
         {
             path: '/order/:id',
             name: 'order-info',
-            component: OrderInfo,
+            component: () => import('../views/OrderInfo'),
             beforeEnter: (to, from, next) => {
-                axios.get('http://localhost:8000/api/authenticated').then(() => {
+                axios.get(`${baseURL}/api/authenticated`).then(() => {
                     next()
                 }).catch(() => {
                     return next({name: 'login'})
@@ -62,4 +58,7 @@ const router = new VueRouter({
     linkActiveClass: 'active'
 })
 
-export default router
+export {
+    router,
+    baseURL
+}

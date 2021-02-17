@@ -36,7 +36,7 @@ export default {
     },
     methods: {
         login() {
-            axios.post('api/login', this.form).then(() => {
+            axios.post(`${baseURL}/api/login`, this.form).then(() => {
                 this.$router.push({name: 'admin-index'})
             }).catch((error) => {
                 console.log(error)

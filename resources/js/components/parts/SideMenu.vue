@@ -29,7 +29,7 @@ export default {
     },
     methods: {
         loadCategories() {
-            axios.get(`${this.$baseURL}/api/categories/`).then(response => {
+            axios.get(`${this.$root.baseURL}/api/categories/`).then(response => {
                 this.categories = response.data.categories
             })
         },

@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         loadProducts(alias) {
-            axios.get(`${this.$baseURL}/api/products/${alias ? alias : ''}`).then(response => {
+            axios.get(`${this.$root.baseURL}/api/products/${alias ? alias : ''}`).then(response => {
                 this.products = response.data.products
 
                 let title = alias ? response.data.products[0].category.title : ''

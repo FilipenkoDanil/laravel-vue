@@ -54,7 +54,7 @@ export default {
     },
     methods: {
         getOrderInfo(orderId) {
-            axios.post(`${this.$baseURL}/api/show`, {
+            axios.post(`${this.$root.baseURL}/api/show`, {
                 id: orderId
             }).then((response) => {
                 this.order = response.data.order
@@ -62,7 +62,7 @@ export default {
             })
         },
         changeStatus() {
-            axios.post(`${this.$baseURL}/api/change`, {
+            axios.post(`${this.$root.baseURL}/api/change`, {
                 id: this.order.id,
             }).then((response) => {
                 this.order = '';

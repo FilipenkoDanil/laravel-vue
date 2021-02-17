@@ -17,13 +17,11 @@
 export default {
     name: "Navbar",
     data() {
-        return {
-
-        }
+        return {}
     },
     methods: {
         logout() {
-            axios.post(`${this.$baseURL}/api/logout`).then(() => {
+            axios.post(`${this.$root.baseURL}/api/logout`).then(() => {
                 this.$router.push({name: 'home'})
             })
         }

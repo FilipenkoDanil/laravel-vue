@@ -135,7 +135,7 @@ export default {
             }
         },
         send() {
-            axios.post(`${this.$baseURL}/api/orders`, {
+            axios.post(`${this.$root.baseURL}/api/orders`, {
                 cart: this.cart,
                 form: this.form,
                 total: this.totalprice,
