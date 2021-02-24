@@ -58,7 +58,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="item in cart">
-                        <td><strong>{{ item.title }} x {{ item.amount }}</strong></td>
+                        <td><strong>{{ item.title }} x {{ item.count }}</strong></td>
                         <td><strong>{{ item.productTotal }}₴</strong></td>
                     </tr>
                     <tr>
@@ -123,7 +123,7 @@ export default {
         setTotal() {
             if (this.cart) {
                 this.totalprice = this.cart.reduce((total, item) => {
-                    return total + item.amount * item.price;
+                    return total + item.count * item.price;
                 }, 0)
             }
         },

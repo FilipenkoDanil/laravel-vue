@@ -39,7 +39,7 @@ class OrderController extends Controller
             OrderProducts::create([
                 'order_id' => $order->id,
                 'product_id' => $orderProduct['id'],
-                'count' => $orderProduct['amount'],
+                'count' => $orderProduct['count'],
                 'price' => $orderProduct['price']
             ]);
         }

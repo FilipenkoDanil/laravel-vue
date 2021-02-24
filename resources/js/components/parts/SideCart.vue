@@ -25,7 +25,7 @@
                                     <b-button-group size="sm">
                                         <b-button @click="cartUpdateCount(item.id, 'minus')" variant="success">-
                                         </b-button>
-                                        <b-button variant="success" disabled>{{ item.amount }}</b-button>
+                                        <b-button variant="success" disabled>{{ item.count }}</b-button>
                                         <b-button @click="cartUpdateCount(item.id, 'plus')" variant="success">+
                                         </b-button>
                                     </b-button-group>
@@ -64,7 +64,7 @@ export default {
                 description: '',
                 img: '',
                 price: '',
-                amount: '',
+                count: '',
             },
             badge: 0,
             totalprice: 0,
@@ -75,14 +75,14 @@ export default {
             let product = this.cart.findIndex(item => item.id === prodId);
             if (product !== -1) {
                 if (type === 'plus') {
-                    this.cart[product].amount += 1
-                    this.cart[product].productTotal = this.cart[product].amount * this.cart[product].price
-                } else if (this.cart[product].amount <= 1) {
+                    this.cart[product].count += 1
+                    this.cart[product].productTotal = this.cart[product].count * this.cart[product].price
+                } else if (this.cart[product].count <= 1) {
                     this.cart.splice(product, 1);
 
                 } else {
-                    this.cart[product].amount -= 1
-                    this.cart[product].productTotal = this.cart[product].amount * this.cart[product].price
+                    this.cart[product].count -= 1
+                    this.cart[product].productTotal = this.cart[product].count * this.cart[product].price
                 }
                 eventEmitter.$emit('cartUpdate', this.cart)
                 this.storeCart()
@@ -94,7 +94,7 @@ export default {
                 this.cart = JSON.parse(localStorage.getItem('carts'))
                 this.badge = this.cart.length
                 this.totalprice = this.cart.reduce((total, item) => {
-                    return total + item.amount * item.price;
+                    return total + item.count * item.price;
                 }, 0)
             }
         },
@@ -116,15 +116,15 @@ export default {
         eventEmitter.$on('productAddToCart', pro => {
             let item = this.cart.findIndex(item => item.id === pro.id);
             if (item !== -1) {
-                this.cart[item].amount += 1
-                this.cart[item].productTotal = this.cart[item].amount * this.cart[item].price
+                this.cart[item].count += 1
+                this.cart[item].productTotal = this.cart[item].count * this.cart[item].price
             } else {
                 this.cartadd.id = pro.id
                 this.cartadd.title = pro.title
                 this.cartadd.description = pro.description
                 this.cartadd.img = pro.img
                 this.cartadd.price = pro.price
-                this.cartadd.amount = 1
+                this.cartadd.count = 1
                 this.cartadd.productTotal = pro.price
 
                 this.cart.push(this.cartadd)

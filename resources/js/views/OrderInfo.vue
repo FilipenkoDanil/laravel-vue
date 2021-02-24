@@ -26,7 +26,7 @@
                         <th scope="row">{{ product.product.title }}</th>
                         <td>{{ product.count }}</td>
                         <td>{{ product.price }}₴</td>
-                        <td>{{ product.price * product.count }}</td>
+                        <td>{{ product.price * product.count }}₴</td>
                     </tr>
 
                     <tr>

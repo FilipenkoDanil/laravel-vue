@@ -6,27 +6,29 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderProducts;
 use Illuminate\Http\Request;
-use mysql_xdevapi\Exception;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function newOrders()
     {
         return response()->json([
             'orders' => Order::where('new', 1)->get()
         ], 200);
     }
 
+    public function allOrders()
+    {
+        return response()->json([
+            'orders' => Order::latest()->get()
+        ], 200);
+    }
+
     public function show(Request $request)
     {
-        try {
-            return response()->json([
-                'order' => Order::where('id', $request->id)->first(),
-                'products' => OrderProducts::with('product')->where('order_id', $request->id)->get()
-            ], 200);
-        } catch (\Exception $exception) {
-            return $exception;
-        }
+        return response()->json([
+            'order' => Order::where('id', $request->id)->first(),
+            'products' => OrderProducts::with('product')->where('order_id', $request->id)->get()
+        ], 200);
     }
 
     public function changeStatus(Request $request)

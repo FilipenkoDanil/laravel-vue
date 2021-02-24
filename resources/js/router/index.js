@@ -30,6 +30,18 @@ const router = new VueRouter({
 
         },
         {
+            path: '/order/:id',
+            name: 'order-info',
+            component: () => import('../views/OrderInfo'),
+            beforeEnter: (to, from, next) => {
+                axios.get(`${baseURL}/api/authenticated`).then(() => {
+                    next()
+                }).catch(() => {
+                    return next({name: 'login'})
+                })
+            }
+        },
+        {
             path: '/admin',
             name: 'admin-index',
             component: () => import('../views/AdminPanel'),
@@ -42,9 +54,9 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/order/:id',
-            name: 'order-info',
-            component: () => import('../views/OrderInfo'),
+            path: '/admin/products',
+            name: 'admin-products',
+            component: () => import('../views/Products'),
             beforeEnter: (to, from, next) => {
                 axios.get(`${baseURL}/api/authenticated`).then(() => {
                     next()
@@ -52,8 +64,7 @@ const router = new VueRouter({
                     return next({name: 'login'})
                 })
             }
-        }
-
+        },
     ],
     linkActiveClass: 'active'
 })

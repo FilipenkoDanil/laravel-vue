@@ -4,9 +4,12 @@
 
         <b-container class="bg-light rounded">
             <div class="mt-4 p-3">
+                <b-select v-model="type" class="col-3">
+                    <b-select-option value="new">Новые заказы</b-select-option>
+                    <b-select-option value="all">Все заказы</b-select-option>
+                </b-select>
                 <div v-if="orders.length > 0">
-                    <h2>Новые заказы</h2>
-                    <br>
+                    <br/>
                     <table class="table">
                         <thead class="thead-dark">
                         <tr>
@@ -34,7 +37,7 @@
                     </table>
                 </div>
                 <div v-else>
-                    <h1 class="text-center">Заказы закончились</h1>
+                    <h1 class="text-center">Нет заказов</h1>
                 </div>
             </div>
         </b-container>
@@ -52,11 +55,17 @@ export default {
     data() {
         return {
             orders: [],
+            type: 'new'
         }
     },
     methods: {
-        getOrders() {
+        getNewOrders() {
             axios.get(`${this.$root.baseURL}/api/new-orders`).then((response) => {
+                this.orders = response.data.orders
+            })
+        },
+        getAllOrders() {
+            axios.get(`${this.$root.baseURL}/api/all-orders`).then((response) => {
                 this.orders = response.data.orders
             })
         },
@@ -66,8 +75,17 @@ export default {
             }
         }
     },
+    watch: {
+        type: function () {
+            if(this.type == 'new'){
+                this.getNewOrders()
+            } else {
+                this.getAllOrders()
+            }
+        }
+    },
     mounted() {
-        this.getOrders()
+        this.getNewOrders()
     }
 }
 </script>

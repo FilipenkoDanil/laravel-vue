@@ -17,6 +17,10 @@ class LoginController extends Controller
 
         if (Auth::attempt($request->only('email', 'password'))) {
             return response()->json(Auth::user(), 200);
+        } else {
+            return response()->json([
+                'error' => ['Пользователь с таким логином или паролем не найден.']
+            ]);
         }
     }
 

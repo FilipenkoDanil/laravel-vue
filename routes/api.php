@@ -29,6 +29,7 @@ Route::apiResource('orders', \App\Http\Controllers\API\OrderController::class);
 Route::post('login', [\App\Http\Controllers\API\LoginController::class, 'login']);
 Route::post('logout', [\App\Http\Controllers\API\LoginController::class, 'logout']);
 
-Route::get('/new-orders', [\App\Http\Controllers\API\AdminController::class, 'index']);
+Route::get('/new-orders', [\App\Http\Controllers\API\AdminController::class, 'newOrders']);
+Route::get('/all-orders', [\App\Http\Controllers\API\AdminController::class, 'allOrders']);
 Route::post('/show', [\App\Http\Controllers\API\AdminController::class, 'show']);
 Route::post('/change', [\App\Http\Controllers\API\AdminController::class, 'changeStatus']);

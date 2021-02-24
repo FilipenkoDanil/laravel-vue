@@ -33,7 +33,7 @@ export default {
         eventEmitter.$on('cartUpdate', cart => {
             this.badge = cart.length
             this.totalprice = cart.reduce((total, item) => {
-                return total + item.amount * item.price;
+                return total + item.count * item.price;
             }, 0)
         })
 

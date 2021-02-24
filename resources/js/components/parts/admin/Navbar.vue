@@ -3,6 +3,11 @@
         <b-navbar toggleable="lg" type="dark" variant="info">
             <b-container>
                 <b-navbar-brand :to="{ name: 'admin-index' }">Админ-панель</b-navbar-brand>
+
+                <b-navbar-nav>
+                    <b-nav-item :to="{ name: 'admin-products' }">Товары</b-nav-item>
+                </b-navbar-nav>
+
                 <b-navbar-nav class="ml-auto">
                     <div class="text-center">
                         <b-button @click.prevent="logout" v-b-toggle.sidebar-right variant="danger">Выход</b-button>
