@@ -77,15 +77,13 @@
                 </b-form-group>
 
                 <b-form-group
-                    label="Изображение (URL)"
+                    label="Изображение"
                     label-for="img">
-                    <b-form-input
+                    <b-form-file
                         id="img"
                         v-model="product.img"
-                        @blur="$v.product.img.$touch()"
-                        :class="{'is-invalid': $v.product.img.$error }"
-                        required>
-                    </b-form-input>
+                    >
+                    </b-form-file>
                 </b-form-group>
 
                 <b-form-group
@@ -109,7 +107,7 @@
 <script>
 import Navbar from "../components/parts/admin/Navbar";
 import ValidationErrors from "../components/parts/ValidationErrors";
-import {required, minLength, numeric, url} from 'vuelidate/lib/validators'
+import {required, minLength, numeric} from 'vuelidate/lib/validators'
 
 export default {
     name: "Products",
@@ -123,7 +121,7 @@ export default {
                 title: '',
                 description: '',
                 price: '',
-                img: '',
+                img: null,
                 category_id: '',
             },
             show: false,
@@ -144,10 +142,6 @@ export default {
             price: {
                 required,
                 numeric
-            },
-            img: {
-                required,
-                url
             },
             category_id: {
                 required
@@ -174,14 +168,19 @@ export default {
             this.product.title = pro.title
             this.product.description = pro.description
             this.product.price = pro.price
-            this.product.img = pro.img
+            this.product.img = null
             this.product.category_id = pro.category_id
 
             this.show = true
             this.isEdit = true
         },
         resetModal() {
-            this.product = {}
+            this.product.id = ''
+            this.product.title = ''
+            this.product.description = ''
+            this.product.price = ''
+            this.product.img = null
+            this.product.category_id = ''
             this.validationErrors = ''
             this.$v.$reset()
             this.isEdit = false
@@ -191,14 +190,17 @@ export default {
             this.handleSubmit()
         },
         handleSubmit() {
+            const formData = new FormData()
+            formData.append('title', this.product.title)
+            formData.append('description', this.product.description)
+            formData.append('price', this.product.price)
+            if (this.product.img !== null)
+                formData.append('img', this.product.img)
+            formData.append('category_id', this.product.category_id)
+
             if (this.isEdit) {
-                axios.put(`${this.$root.baseURL}/api/products/${this.product.id}`, {
-                    title: this.product.title,
-                    description: this.product.description,
-                    price: this.product.price,
-                    img: this.product.img,
-                    category_id: this.product.category_id,
-                }).then(() => {
+                formData.append("_method", "put");
+                axios.post(`${this.$root.baseURL}/api/products/${this.product.id}`, formData).then(() => {
                     this.loadProducts()
                     this.$nextTick(() => {
                         this.$bvModal.hide('modal')
@@ -207,13 +209,7 @@ export default {
                     this.validationErrors = error.response.data.errors
                 })
             } else {
-                axios.post(`${this.$root.baseURL}/api/products/`, {
-                    title: this.product.title,
-                    description: this.product.description,
-                    price: this.product.price,
-                    img: this.product.img,
-                    category_id: this.product.category_id,
-                }).then(() => {
+                axios.post(`${this.$root.baseURL}/api/products`, formData).then(() => {
                     this.loadProducts()
                     this.$nextTick(() => {
                         this.$bvModal.hide('modal')

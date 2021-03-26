@@ -16,7 +16,7 @@
                     <table>
                         <tr v-for="item in cart">
                             <td><img style="max-width: 100px; min-height: 100px"
-                                     :src="item.img">
+                                     :src="'storage/' + item.img">
                             </td>
                             <td><b>{{ item.title }}</b><h6 style="font-size: 10px">{{ item.description }}</h6>
                             </td>

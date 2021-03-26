@@ -36,7 +36,8 @@ export default {
 
 <style>
 body {
-    background: url("http://www.izmail.pizza-nys.com.ua/wp-content/themes/red-pepper/assets/img/cards-list.png") no-repeat;
+    background: url("http://www.izmail.pizza-nys.com.ua/wp-content/themes/red-pepper/assets/img/cards-list.png") no-repeat fixed;
     background-size: cover;
+    padding-bottom: 20px;
 }
 </style>

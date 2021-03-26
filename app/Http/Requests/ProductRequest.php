@@ -23,13 +23,19 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'title' => 'required|min:3',
             'description' => 'required|min: 2',
             'price' => 'required|numeric',
-            'img' => 'required|url',
+            'img' => 'required',
             'category_id' => 'required'
         ];
+
+        if($this->route()->named('products.update')){
+            $rules['img'] = '';
+        }
+
+        return $rules;
     }
 
     public function messages()
@@ -40,7 +46,6 @@ class ProductRequest extends FormRequest
             'price.required' => 'Поле Цена обязательно для заполнения.',
             'price.numeric' => 'Поле Цена должно быть числом.',
             'img.required' => 'Поле Изображение обязательно для заполнения.',
-            'img.url' => 'Поле Изображение имеет ошибочный формат URL.',
             'category_id.required' => 'Поле Категория обязательно для заполнения.',
         ];
     }

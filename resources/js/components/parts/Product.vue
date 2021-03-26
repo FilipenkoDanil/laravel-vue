@@ -5,7 +5,7 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-4" v-for="product in products" :key="product.id">
                     <div class="card mt-3">
                         <img class="card-img"
-                             :src="product.img"
+                             :src="'storage/' + product.img"
                              style="max-height: 230px"
                              alt="">
 

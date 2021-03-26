@@ -29,7 +29,10 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
-        Product::create($request->all());
+        $path = $request->file('img')->store('products');
+        $params = $request->all();
+        $params['img'] = $path;
+        Product::create($params);
     }
 
     /**
@@ -56,7 +59,21 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, $id)
     {
-        Product::findOrFail($id)->update($request->all());
+        $product = Product::findOrFail($id);
+        if($request->has('img')){
+            \Storage::delete($product->img);
+            $path = $request->file('img')->store('products');
+            $params = $request->all();
+            $params['img'] = $path;
+            $product->update($params);
+        } else {
+            $product->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'price' => $request->price,
+                'category_id' => $request->category_id,
+            ]);
+        }
     }
 
     /**
